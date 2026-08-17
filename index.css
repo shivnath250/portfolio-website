@@ -257,6 +257,8 @@ a { color: inherit; }
 .now-list li { margin-bottom: 0.5rem; max-width: var(--measure); color: var(--muted); }
 .now-list li:last-child { margin-bottom: 0; }
 .now-list strong { color: var(--ink); font-weight: 600; }
+.now-list .cert-link { margin-top: 0.15rem; }
+.now-list .cert-link + .cert-link { margin-left: 0.9rem; }
 
 /* photos woven into a chapter — uniform tiles, never abrupt */
 .chapter-media {
