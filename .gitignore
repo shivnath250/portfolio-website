@@ -1,0 +1,24 @@
+# ------------------------------------------------------------------
+# Raw / personal source material — NEVER publish to the public repo.
+# These stay on the local disk only.
+# ------------------------------------------------------------------
+portfolio raw data.zip
+
+# Photo folders (raw originals)
+Adani photos/
+Competitions photos/
+GLIM photos/
+Karma Yoga photos/
+Profile photos/
+
+# Personal / sensitive documents
+Official docs-20260510T020357Z-3-001/
+Scanned Docs-20260510T020344Z-3-001/
+certificates-20260707T154942Z-3-001/
+
+# Duplicate / loose PDFs (the published resume is Shivnath_Gujar_Resume.pdf)
+Shivnath Gujar *.pdf
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
