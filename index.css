@@ -268,6 +268,35 @@ a { color: inherit; }
 .now-list .cert-link { margin-top: 0.15rem; }
 .now-list .cert-link + .cert-link { margin-left: 0.9rem; }
 
+/* single supporting photo within a chapter */
+.chapter-figure {
+  margin: 1.5rem 0 0;
+  max-width: 540px;
+}
+.chapter-figure .frame {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+}
+.chapter-figure .frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.chapter-figure figcaption {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
 /* photos woven into a chapter — uniform tiles, never abrupt */
 .chapter-media {
   display: grid;
