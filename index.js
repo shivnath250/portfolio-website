@@ -101,3 +101,20 @@ if (lb) {
     if (e.key === 'Escape' && lb.classList.contains('is-open')) { closeLightbox(); }
   });
 }
+
+// Copy email to clipboard, with brief feedback.
+var copyBtn = document.getElementById('copyEmail');
+if (copyBtn && navigator.clipboard) {
+  copyBtn.addEventListener('click', function () {
+    navigator.clipboard.writeText(copyBtn.getAttribute('data-copy')).then(function () {
+      copyBtn.textContent = 'Copied';
+      copyBtn.classList.add('copied');
+      setTimeout(function () {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }, 1600);
+    }).catch(function () {});
+  });
+} else if (copyBtn) {
+  copyBtn.hidden = true;
+}
