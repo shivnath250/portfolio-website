@@ -197,15 +197,21 @@
       <p class="section-label" id="gallery-heading">Gallery</p>
       <p class="gallery-lead reveal">A fuller picture &mdash; on the plant floor, in the field, on campus, and off the clock.</p>
 
-      <div class="gal-filters reveal" role="group" aria-label="Filter gallery">
-        <button type="button" class="gal-filter is-active" data-filter="all" aria-pressed="true">All</button>
-        <button type="button" class="gal-filter" data-filter="work" aria-pressed="false">Work</button>
-        <button type="button" class="gal-filter" data-filter="ky" aria-pressed="false">Karma Yoga</button>
-        <button type="button" class="gal-filter" data-filter="campus" aria-pressed="false">Campus</button>
-        <button type="button" class="gal-filter" data-filter="sport" aria-pressed="false">Sport</button>
+      <div class="gal-head reveal">
+        <div class="gal-filters" role="group" aria-label="Filter gallery">
+          <button type="button" class="gal-filter is-active" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="gal-filter" data-filter="work" aria-pressed="false">Work</button>
+          <button type="button" class="gal-filter" data-filter="ky" aria-pressed="false">Karma Yoga</button>
+          <button type="button" class="gal-filter" data-filter="campus" aria-pressed="false">Campus</button>
+          <button type="button" class="gal-filter" data-filter="sport" aria-pressed="false">Sport</button>
+        </div>
+        <div class="gal-controls">
+          <button type="button" class="gal-arrow" data-dir="-1" aria-label="Scroll to previous photos">&lsaquo;</button>
+          <button type="button" class="gal-arrow" data-dir="1" aria-label="Scroll to next photos">&rsaquo;</button>
+        </div>
       </div>
 
-      <div class="gal-grid reveal">
+      <div class="gal-track reveal">
         <figure class="gal-fig" data-cat="work">
           <button type="button" class="gal-btn" aria-label="Enlarge photo: In the fleet-monitoring control room at Adani">
             <span class="frame"><img src="assets/img/gallery/work-controlroom.jpg" width="1040" height="780" loading="lazy" alt="Shivnath seated in the Adani fleet-monitoring control room"></span>
