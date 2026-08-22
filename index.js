@@ -45,14 +45,20 @@ if (sections.length && 'IntersectionObserver' in window) {
   sections.forEach(function (s) { spy.observe(s.sec); });
 }
 
-// Gallery: category filter + horizontal slider.
+// Gallery: category filter + one-photo-at-a-time slider.
 var galFilters = document.querySelectorAll('.gal-filter');
 var galFigs = document.querySelectorAll('.gal-fig');
 var galTrack = document.querySelector('.gal-track');
 var galArrows = document.querySelectorAll('.gal-arrow');
+var galCount = document.getElementById('galCount');
 
-function galUpdateArrows() {
+function galPad(n) { return n < 10 ? '0' + n : '' + n; }
+function galUpdate() {
   if (!galTrack) return;
+  var total = [].filter.call(galFigs, function (f) { return !f.hidden; }).length;
+  var w = galTrack.clientWidth || 1;
+  var idx = Math.min(total, Math.round(galTrack.scrollLeft / w) + 1);
+  if (galCount) { galCount.textContent = galPad(total ? idx : 0) + ' / ' + galPad(total); }
   var max = galTrack.scrollWidth - galTrack.clientWidth - 2;
   galArrows.forEach(function (a) {
     var dir = parseInt(a.getAttribute('data-dir'), 10);
@@ -62,13 +68,13 @@ function galUpdateArrows() {
 galArrows.forEach(function (a) {
   a.addEventListener('click', function () {
     var dir = parseInt(a.getAttribute('data-dir'), 10);
-    galTrack.scrollBy({ left: dir * Math.round(galTrack.clientWidth * 0.85), behavior: 'smooth' });
+    galTrack.scrollBy({ left: dir * galTrack.clientWidth, behavior: 'smooth' });
   });
 });
 if (galTrack) {
-  galTrack.addEventListener('scroll', galUpdateArrows, { passive: true });
-  window.addEventListener('resize', galUpdateArrows);
-  galUpdateArrows();
+  galTrack.addEventListener('scroll', galUpdate, { passive: true });
+  window.addEventListener('resize', galUpdate);
+  galUpdate();
 }
 galFilters.forEach(function (btn) {
   btn.addEventListener('click', function () {
@@ -81,8 +87,8 @@ galFilters.forEach(function (btn) {
     galFigs.forEach(function (fig) {
       fig.hidden = !(cat === 'all' || fig.getAttribute('data-cat') === cat);
     });
-    if (galTrack) { galTrack.scrollTo({ left: 0 }); }
-    galUpdateArrows();
+    if (galTrack) { galTrack.scrollLeft = 0; }
+    galUpdate();
   });
 });
 

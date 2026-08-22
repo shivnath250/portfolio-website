@@ -197,18 +197,12 @@
       <p class="section-label" id="gallery-heading">Gallery</p>
       <p class="gallery-lead reveal">A fuller picture &mdash; on the plant floor, in the field, on campus, and off the clock.</p>
 
-      <div class="gal-head reveal">
-        <div class="gal-filters" role="group" aria-label="Filter gallery">
-          <button type="button" class="gal-filter is-active" data-filter="all" aria-pressed="true">All</button>
-          <button type="button" class="gal-filter" data-filter="work" aria-pressed="false">Work</button>
-          <button type="button" class="gal-filter" data-filter="ky" aria-pressed="false">Karma Yoga</button>
-          <button type="button" class="gal-filter" data-filter="campus" aria-pressed="false">Campus</button>
-          <button type="button" class="gal-filter" data-filter="sport" aria-pressed="false">Sport</button>
-        </div>
-        <div class="gal-controls">
-          <button type="button" class="gal-arrow" data-dir="-1" aria-label="Scroll to previous photos">&lsaquo;</button>
-          <button type="button" class="gal-arrow" data-dir="1" aria-label="Scroll to next photos">&rsaquo;</button>
-        </div>
+      <div class="gal-filters reveal" role="group" aria-label="Filter gallery">
+        <button type="button" class="gal-filter is-active" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="gal-filter" data-filter="work" aria-pressed="false">Work</button>
+        <button type="button" class="gal-filter" data-filter="ky" aria-pressed="false">Karma Yoga</button>
+        <button type="button" class="gal-filter" data-filter="campus" aria-pressed="false">Campus</button>
+        <button type="button" class="gal-filter" data-filter="sport" aria-pressed="false">Sport</button>
       </div>
 
       <div class="gal-track reveal">
@@ -278,6 +272,12 @@
           </button>
           <figcaption>Paintball with the team.</figcaption>
         </figure>
+      </div>
+
+      <div class="gal-nav reveal">
+        <button type="button" class="gal-arrow" data-dir="-1" aria-label="Previous photo">&lsaquo;</button>
+        <span class="gal-count" id="galCount" aria-live="polite">01&nbsp;/&nbsp;11</span>
+        <button type="button" class="gal-arrow" data-dir="1" aria-label="Next photo">&rsaquo;</button>
       </div>
     </section>
 
