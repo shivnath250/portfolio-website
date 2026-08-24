@@ -145,9 +145,9 @@ a { color: inherit; }
 .link-arrow:hover { color: var(--accent); }
 
 .hero-portrait img {
-  width: clamp(150px, 22vw, 220px);
+  width: clamp(160px, 22vw, 230px);
   height: auto;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   border: 1px solid var(--hairline);
 }
@@ -753,7 +753,7 @@ body.lb-open { overflow: hidden; }
   .site-nav { display: none; }
   .hero { grid-template-columns: 1fr; }
   .hero-portrait { order: -1; }
-  .hero-portrait img { width: 120px; }
+  .hero-portrait img { width: 150px; }
 }
 @media (max-width: 420px) {
   .stats { grid-template-columns: 1fr; }
