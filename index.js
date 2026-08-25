@@ -51,14 +51,20 @@ var galFigs = document.querySelectorAll('.gal-fig');
 var galTrack = document.querySelector('.gal-track');
 var galArrows = document.querySelectorAll('.gal-arrow');
 var galCount = document.getElementById('galCount');
+var galCaption = document.getElementById('galCaption');
 
 function galPad(n) { return n < 10 ? '0' + n : '' + n; }
 function galUpdate() {
   if (!galTrack) return;
-  var total = [].filter.call(galFigs, function (f) { return !f.hidden; }).length;
+  var visible = [].filter.call(galFigs, function (f) { return !f.hidden; });
+  var total = visible.length;
   var w = galTrack.clientWidth || 1;
   var idx = Math.min(total, Math.round(galTrack.scrollLeft / w) + 1);
   if (galCount) { galCount.textContent = galPad(total ? idx : 0) + ' / ' + galPad(total); }
+  if (galCaption && total) {
+    var cur = visible[idx - 1];
+    if (cur) { galCaption.textContent = cur.querySelector('.gal-btn').getAttribute('data-cap') || ''; }
+  }
   var max = galTrack.scrollWidth - galTrack.clientWidth - 2;
   galArrows.forEach(function (a) {
     var dir = parseInt(a.getAttribute('data-dir'), 10);
@@ -121,8 +127,7 @@ if (lb) {
   document.querySelectorAll('.gal-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var img = btn.querySelector('img');
-      var figcap = btn.closest('.gal-fig').querySelector('figcaption');
-      openLightbox(img, figcap ? figcap.textContent : '');
+      openLightbox(img, btn.getAttribute('data-cap') || '');
     });
   });
   lbClose.addEventListener('click', closeLightbox);
