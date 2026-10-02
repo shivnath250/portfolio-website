@@ -330,33 +330,56 @@ a { color: inherit; }
 /* ---------- Credentials ---------- */
 .cred-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(2rem, 4vw, 3.25rem) clamp(1.5rem, 3.5vw, 3rem);
   align-items: start;
 }
+.cred-edu { grid-column: 1 / -1; }
+.cred-block { min-width: 0; }
 .cred-title {
   font-size: 1.05rem;
   font-weight: 600;
-  margin: 0 0 0.9rem;
+  margin: 0 0 1rem;
 }
-.cred-block .cred-title ~ .cred-title,
-.cred-block .plain-list + .cred-title,
-.cred-block .cred-note + .cred-title { margin-top: 1.75rem; }
 
-.edu-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-.edu-table th, .edu-table td {
+/* Education — full-width, resume-style table */
+.edu-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.edu-table thead th {
   text-align: left;
-  padding: 0.5rem 0.6rem 0.5rem 0;
+  font-family: var(--sans);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 1.25rem 0.7rem 0;
   border-bottom: 1px solid var(--hairline);
-  vertical-align: top;
 }
-.edu-table th { font-weight: 600; white-space: nowrap; }
-.edu-table td { color: var(--muted); }
-.edu-table .num { text-align: right; white-space: nowrap; color: var(--ink); font-variant-numeric: tabular-nums; }
+.edu-table thead th.num { text-align: right; padding: 0 0 0.7rem 1.5rem; }
+.edu-table tbody th,
+.edu-table tbody td {
+  text-align: left;
+  padding: 0.8rem 1.25rem 0.8rem 0;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: baseline;
+}
+.edu-table tbody tr:last-child th,
+.edu-table tbody tr:last-child td { border-bottom: none; }
+.edu-table tbody th { font-weight: 600; white-space: nowrap; }
+.edu-table tbody td { color: var(--muted); }
+.edu-table td:nth-child(2) { width: 99%; }
+.edu-table .num {
+  text-align: right;
+  white-space: nowrap;
+  padding: 0.8rem 0 0.8rem 1.5rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
 
-.plain-list { list-style: none; margin: 0 0 0.5rem; padding: 0; font-size: 0.9rem; }
-.plain-list li { padding: 0.35rem 0; border-bottom: 1px solid var(--hairline); color: var(--muted); }
-.plain-list li:last-child { border-bottom: none; }
+.plain-list { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
+.plain-list li { padding: 0.6rem 0; border-bottom: 1px solid var(--hairline); color: var(--muted); line-height: 1.5; }
+.plain-list li:first-child { padding-top: 0; }
+.plain-list li:last-child { border-bottom: none; padding-bottom: 0; }
 .cert-link {
   display: inline-block;
   white-space: nowrap;
@@ -750,7 +773,9 @@ body.lb-open { overflow: hidden; }
   .skills-row { grid-template-columns: repeat(2, 1fr); }
   .skills-foot { gap: 0.75rem 2rem; }
   .edu-table { font-size: 0.85rem; }
-  .edu-table th { white-space: normal; }
+  .edu-table thead { display: none; }
+  .edu-table tbody th { white-space: normal; }
+  .edu-table td:nth-child(2) { width: auto; }
 }
 @media (max-width: 640px) {
   .site-nav { display: none; }
@@ -804,3 +829,6 @@ button:focus-visible {
   a { color: #000; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8pt; word-break: break-all; }
 }
+
+
+
