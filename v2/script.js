@@ -277,7 +277,7 @@
     imgs.forEach(function (fig) { track.appendChild(build(fig, false)); });
     imgs.forEach(function (fig) { track.appendChild(build(fig, true)); });
 
-    var half = 0, dragging = false, startX = 0, startScroll = 0, moved = 0, idle = 0;
+    var half = 0, dragging = false, pointerDown = false, downX = 0, downY = 0, startScroll = 0, idle = 0;
     function recalc() { half = track.scrollWidth / 2; }
     recalc(); window.addEventListener('resize', recalc);
     function wrapScroll() { if (!half) return; if (wrap.scrollLeft >= half) wrap.scrollLeft -= half; else if (wrap.scrollLeft <= 0) wrap.scrollLeft += half; }
@@ -294,31 +294,43 @@
       if (d) { wrap.scrollLeft += d; poke(); }
     }, { passive: true });
     wrap.addEventListener('pointerdown', function (e) {
-      if (e.pointerType === 'touch') return;
-      dragging = true; moved = 0; startX = e.clientX; startScroll = wrap.scrollLeft;
-      wrap.classList.add('drag'); wrap.setPointerCapture(e.pointerId); poke();
+      pointerDown = true; dragging = false; downX = e.clientX; downY = e.clientY; startScroll = wrap.scrollLeft; poke();
     });
     wrap.addEventListener('pointermove', function (e) {
-      if (!dragging) return; var d = e.clientX - startX; moved = Math.max(moved, Math.abs(d));
-      wrap.scrollLeft = startScroll - d; poke();
+      if (!pointerDown) return;
+      var dx = e.clientX - downX;
+      if (!dragging && Math.abs(dx) > 5) { dragging = true; wrap.classList.add('drag'); }
+      if (dragging && e.pointerType !== 'touch') wrap.scrollLeft = startScroll - dx;
+      if (dragging) poke();
     });
-    function endDrag() { dragging = false; wrap.classList.remove('drag'); poke(); }
-    wrap.addEventListener('pointerup', endDrag);
-    wrap.addEventListener('pointercancel', endDrag);
+    function pointerEnd(e) {
+      if (!pointerDown) return; pointerDown = false; wrap.classList.remove('drag');
+      var dist = Math.hypot((e.clientX || 0) - downX, (e.clientY || 0) - downY);
+      if (!dragging && dist < 6) openAt(e.clientX, e.clientY);
+      dragging = false; poke();
+    }
+    wrap.addEventListener('pointerup', pointerEnd);
+    wrap.addEventListener('pointercancel', function () { pointerDown = false; dragging = false; wrap.classList.remove('drag'); });
     wrap.addEventListener('touchstart', poke, { passive: true });
-    wrap.addEventListener('touchmove', poke, { passive: true });
 
-    // lightbox
-    var lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbX = document.getElementById('lbX');
+    // lightbox — works on any frame (incl. the duplicated loop copies)
+    var lb = document.getElementById('lb'), lbImg = document.getElementById('lbImg'), lbX = document.getElementById('lbX'), lbCap = document.getElementById('lbCap');
     var lastFocus = null;
-    track.addEventListener('click', function (e) {
-      if (moved > 6) return;
-      var im = e.target.closest('img'); if (!im || !im.alt) return;
+    function openAt(x, y) {
+      var el = document.elementFromPoint(x, y); if (!el) return;
+      var im = el.tagName === 'IMG' ? el : (el.closest ? el.closest('.frame') : null);
+      if (im && im.tagName !== 'IMG') im = im.querySelector('img');
+      if (!im) return;
+      openImg(im);
+    }
+    function openImg(im) {
+      var fig = im.closest('figure'), cap = fig ? fig.querySelector('figcaption') : null;
+      var text = im.alt || (cap ? cap.textContent : '');
       lastFocus = document.activeElement;
-      lbImg.src = im.src; lbImg.alt = im.alt;
+      lbImg.src = im.src; lbImg.alt = text; if (lbCap) lbCap.textContent = text;
       lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden'; lbX.focus();
-    });
+    }
     function close() {
       lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); lbImg.src = '';
       document.body.style.overflow = ''; if (lastFocus) lastFocus.focus();
